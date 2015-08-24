@@ -28,7 +28,7 @@ class MemeDetailViewController: UIViewController, UINavigationControllerDelegate
         println("Passed in memes array index is \(memesIndex)")
         if memesIndex >= 0 {
             meme = allMemes[memesIndex]
-            self.image.image = meme.memedImage
+            image.image = meme.memedImage
         }
         else {
             let tableHandle: SentMemeTableViewController!
@@ -44,12 +44,12 @@ class MemeDetailViewController: UIViewController, UINavigationControllerDelegate
         let addHandle: EditViewController!
         addHandle = self.storyboard?.instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
         addHandle.memesIndex = self.memesIndex
-        self.presentViewController(addHandle, animated: true, completion: nil)
+        presentViewController(addHandle, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.hidden = false
+        tabBarController?.tabBar.hidden = false
     }
 
 }

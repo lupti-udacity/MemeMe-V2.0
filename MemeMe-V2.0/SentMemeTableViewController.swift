@@ -17,8 +17,7 @@ class SentMemeTableViewController: UITableViewController, UITableViewDataSource,
     
     @IBAction func add(sender: AnyObject) {
         var addHandle: EditViewController
-        addHandle = self.storyboard?.instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
-        //addHandle.memesIndex = self.memesIndex
+        addHandle = storyboard?.instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
         addHandle.memesIndex = -1  // Mark the new Meme
         presentViewController(addHandle, animated: true, completion: nil)
     }
@@ -51,7 +50,7 @@ class SentMemeTableViewController: UITableViewController, UITableViewDataSource,
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Configure the cell...
         let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell") as! UITableViewCell
-        let memed = self.allMemes[indexPath.row]
+        let memed = allMemes[indexPath.row]
         memesIndex = indexPath.row
         // The following two fields are table view cell default properties you can populate.
         cell.textLabel?.text = memed.memedText()
@@ -64,11 +63,11 @@ class SentMemeTableViewController: UITableViewController, UITableViewDataSource,
     // Select an item and push it to detail view
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let memeDetail = self.storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
-        memeDetail.meme = self.allMemes[indexPath.row]
+        let memeDetail = storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        memeDetail.meme = allMemes[indexPath.row]
         memeDetail.memesIndex = indexPath.row
         println("From Table View, the index path is \(memeDetail.memesIndex)")
-        self.navigationController?.pushViewController(memeDetail, animated: true)
+        navigationController?.pushViewController(memeDetail, animated: true)
         
     }
     

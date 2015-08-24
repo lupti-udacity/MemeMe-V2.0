@@ -19,7 +19,7 @@ class SentMemeCollectionViewController: UICollectionViewController, UICollection
     
     @IBAction func addMeme(sender: AnyObject) {
         var addHandle: EditViewController
-        addHandle = self.storyboard?.instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
+        addHandle = storyboard?.instantiateViewControllerWithIdentifier("EditViewController") as! EditViewController
         addHandle.memesIndex = -1  // New Meme
         presentViewController(addHandle, animated: true, completion: nil)
         
@@ -29,9 +29,9 @@ class SentMemeCollectionViewController: UICollectionViewController, UICollection
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         let applicationDelegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
-        self.memes = applicationDelegate.memes
+        memes = applicationDelegate.memes
         sentMemeCollectionView.reloadData()
-        println("View Will Appear Memes Count \(self.memes.count)")
+        println("View Will Appear Memes Count \(memes.count)")
         
     }
 
@@ -39,7 +39,7 @@ class SentMemeCollectionViewController: UICollectionViewController, UICollection
         super.viewDidLoad()
         // Set the collection view flow layout properties
         let space: CGFloat = 3.0
-        let dimension = (self.view.frame.size.width - (2 * space)) / 3.0
+        let dimension = (view.frame.size.width - (2 * space)) / 3.0
         flowLayout.minimumInteritemSpacing = space
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
 
@@ -55,8 +55,8 @@ class SentMemeCollectionViewController: UICollectionViewController, UICollection
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        println("collection count = \(self.memes.count)")
-        return self.memes.count
+        println("collection count = \(memes.count)")
+        return memes.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -72,12 +72,12 @@ class SentMemeCollectionViewController: UICollectionViewController, UICollection
     }
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
         
-        detailController.meme = self.memes[indexPath.item]
+        detailController.meme = memes[indexPath.item]
         detailController.memesIndex = indexPath.item
         // Use pushView instead of presentView to have view slides from right to left. Otherwise it will slide from bottom to top.
-        self.navigationController?.pushViewController(detailController, animated: true)
+        navigationController?.pushViewController(detailController, animated: true)
     }
 
 }

@@ -49,15 +49,15 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             }
             // Show the Share modal
             println("Sliding up the Activity Modal, pick your choice...but the response is very slow. Just need to wait till the simulator complete the initialization of the modal. :(")
-            self.presentViewController(activity, animated: true, completion: nil)
+                presentViewController(activity, animated: true, completion: nil)
         } else {
                 println("Problem of storing the edited Meme. Share action skipped. Bail out")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     @IBAction func cancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +128,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         println("Clear the text")
         
         if bottom.editing.boolValue {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y -= getKeyboardHeight(notification)
         } else if top.editing.boolValue {
            
         }
@@ -138,7 +138,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
     func keyboardWillHide(notification: NSNotification) {
         if bottom.editing.boolValue {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
     
@@ -150,7 +150,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             textField.text = textField == top ? "TOP" : "BOTTOM"
         }
         setTextAttrinutes()
-        self.view.endEditing(true)
+        view.endEditing(true)
         return false
     }
     
@@ -182,7 +182,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             println("Populate the Edit view from the appDelegate memes store")
     
             // Enable the keyboard notification
-            self.subscribeToKeyboardNotifications()
+            subscribeToKeyboardNotifications()
             
         } else {
         // New Meme Request
@@ -222,14 +222,14 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         }
         
         // Enable the keyboard notification
-        self.subscribeToKeyboardNotifications()
+        subscribeToKeyboardNotifications()
         
     }
 
     // View Controller to manage view dismissing
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.unsubscribeFromKeyboardNotifications()
+        unsubscribeFromKeyboardNotifications()
     }
 
     
@@ -239,7 +239,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     // Dismiss image, one of the UIImagePickerController delegate function
@@ -248,12 +248,12 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         {
             // An image is picked.
             image.image = imagePicked
-            self.dismissViewControllerAnimated(true, completion: nil)
+            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
     // Camera functions
@@ -262,7 +262,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     // Compose an UIImage with an overlay of top and bottom texts to the selected image
@@ -272,8 +272,8 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         toolBar.hidden = true
         navigationBar.hidden = true
         // Render view to an image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -289,7 +289,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Given basic data from the editor view, compose a memed image
         if let imageHasPicked = image.image {
             
-            memeObject = Meme(top: self.top.text, bottom: self.bottom.text, image: self.image.image!, memedImage: memedImage())
+            memeObject = Meme(top: top.text, bottom: bottom.text, image: image.image!, memedImage: memedImage())
             
             
             // Invoke a singleton Application Delegate and make memes shared.
